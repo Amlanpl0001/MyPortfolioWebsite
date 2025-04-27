@@ -3,8 +3,8 @@ node_modules/
 npm-debug.log
 yarn-debug.log
 yarn-error.log
-.pnp/
-.pnp.js
+package-lock.json
+yarn.lock
 
 # Python
 __pycache__/
@@ -27,13 +27,17 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
-.pytest_cache/
 .coverage
 htmlcov/
-.venv/
+.pytest_cache/
 
-# Docker
-.docker/
+# React
+/build
+/coverage
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # IDE
 .idea/
@@ -45,16 +49,8 @@ htmlcov/
 .DS_Store
 Thumbs.db
 
-# Environment variables
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# Build files
+# Project specific
+/db/
 /frontend/build/
+/frontend/node_modules/
 /frontend/coverage/
-
-# Database
-*.sqlite3

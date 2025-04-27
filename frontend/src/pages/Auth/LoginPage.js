@@ -7,52 +7,32 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  
+
   const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   // Get the redirect path from location state or default to home
   const from = location.state?.from?.pathname || '/';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!email || !password) {
       setError('Please enter both email and password');
       return;
     }
-    
+
     try {
       setError('');
       setLoading(true);
-      
-      // In a real app, this would call the backend API
-      // For now, we'll simulate a successful login with mock data
-      
+
       // Simulate API call delay
       setTimeout(async () => {
-        // For demo purposes, use these credentials:
-        // Admin: admin@example.com / admin123
-        // Practice User: practice@example.com / practice123
-        
-        let result;
-        
-        if (email === 'admin@example.com' && password === 'admin123') {
-          // Mock successful admin login
-          result = { success: true, role: 'admin', token: 'mock-admin-token' };
-        } else if (email === 'practice@example.com' && password === 'practice123') {
-          // Mock successful practice user login
-          result = { success: true, role: 'practice', token: 'mock-practice-token' };
-        } else {
-          // Mock failed login
-          result = { success: false, error: 'Invalid email or password' };
-        }
-        
+        // Call the login function from AuthContext
+        const result = await login(email, password);
+
         if (result.success) {
-          // In a real app, this would store the token from the API
-          await login(email, password);
-          
           // Redirect based on role
           if (result.role === 'admin') {
             navigate('/admin');
@@ -63,10 +43,10 @@ const LoginPage = () => {
         } else {
           setError(result.error);
         }
-        
+
         setLoading(false);
       }, 1000);
-      
+
     } catch (err) {
       setError('Failed to log in. Please try again.');
       setLoading(false);
@@ -85,8 +65,8 @@ const LoginPage = () => {
       </section>
 
       {/* Advertisement Space */}
-      <div className="ad-banner">
-        Advertisement Space
+      <div className="ad-banner" aria-label="Advertisement Space">
+        <span className="sr-only">Advertisement Space</span>
       </div>
 
       <section className="py-16 bg-gray-100">
@@ -97,7 +77,7 @@ const LoginPage = () => {
                 {error}
               </div>
             )}
-            
+
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="email" className="block text-gray-700 mb-2">Email</label>
@@ -110,7 +90,7 @@ const LoginPage = () => {
                   required
                 />
               </div>
-              
+
               <div>
                 <label htmlFor="password" className="block text-gray-700 mb-2">Password</label>
                 <input
@@ -122,7 +102,7 @@ const LoginPage = () => {
                   required
                 />
               </div>
-              
+
               <div className="text-center">
                 <button
                   type="submit"
@@ -133,13 +113,13 @@ const LoginPage = () => {
                 </button>
               </div>
             </form>
-            
+
             <div className="mt-8 pt-6 border-t border-gray-200 text-center">
               <p className="text-gray-600">
                 Don't have access? Contact the administrator for an account.
               </p>
             </div>
-            
+
             {/* Demo Credentials - Remove in production */}
             <div className="mt-8 pt-6 border-t border-gray-200">
               <h3 className="text-lg font-semibold mb-2">Demo Credentials</h3>
@@ -156,8 +136,8 @@ const LoginPage = () => {
       </section>
 
       {/* Advertisement Space */}
-      <div className="ad-banner">
-        Advertisement Space
+      <div className="ad-banner" aria-label="Advertisement Space">
+        <span className="sr-only">Advertisement Space</span>
       </div>
     </div>
   );

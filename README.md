@@ -14,8 +14,8 @@ A modern, responsive personal portfolio website with a blog and interactive Auto
 - **Authentication System**: Secure access to admin features and the Automation Lab
 - **Responsive Design**: Works on all device sizes (mobile, tablet, desktop)
 - **Modern UI**: Implements glassmorphism and neumorphism design patterns
-- **Advertisement Spaces**: Dedicated areas for ads throughout the site (marked with `ad-banner` and `ad-sidebar` classes)
-- **Live Updates**: Development environment with hot reloading for both frontend and backend
+- **Dark Mode Support**: Toggle between light and dark themes with optimized contrast ratios for accessibility
+- **Pagination**: Browse through blog posts with pagination support
 
 ## Technologies Used
 
@@ -23,8 +23,10 @@ A modern, responsive personal portfolio website with a blog and interactive Auto
 - React.js
 - React Router
 - Tailwind CSS
+- Contrast ratio-optimized color scheme for accessibility
 - Axios for API requests
 - Marked for Markdown rendering
+- TipTap for rich text editing
 
 ### Backend
 - FastAPI (Python)
@@ -98,9 +100,7 @@ A modern, responsive personal portfolio website with a blog and interactive Auto
 
 ### Docker Deployment
 
-#### Production Deployment
-
-To deploy the entire application in production mode using Docker:
+To deploy the entire application using Docker:
 
 1. Clone the repository:
    ```
@@ -117,21 +117,6 @@ To deploy the entire application in production mode using Docker:
    - Frontend: http://localhost
    - Backend API: http://localhost:8000
    - API Documentation: http://localhost:8000/docs
-
-#### Development with Hot Reloading
-
-For development with hot reloading (allowing you to update the site while it's live):
-
-1. Start the application with the override configuration:
-   ```
-   docker-compose -f docker-compose.yml -f docker-compose.override.yml up
-   ```
-
-2. The application will be available at:
-   - Frontend: http://localhost:3000
-   - Backend API: http://localhost:8000
-
-3. Any changes to the frontend or backend code will be automatically applied without needing to restart the containers.
 
 ## Usage
 
@@ -172,23 +157,14 @@ MyPortfolio/
 │   │   │   └── Reading/     # Blog pages
 │   │   ├── App.js           # Main app component
 │   │   └── index.js         # Entry point
-│   ├── Dockerfile           # Production Docker config
-│   ├── Dockerfile.dev       # Development Docker config with hot reloading
+│   ├── Dockerfile           # Frontend Docker config
 │   └── nginx.conf           # Nginx configuration
 ├── backend/                 # FastAPI backend
 │   ├── main.py              # Main application file
 │   ├── requirements.txt     # Python dependencies
 │   └── Dockerfile           # Backend Docker config
-├── docker-compose.yml       # Production Docker Compose config
-└── docker-compose.override.yml # Development Docker Compose config with hot reloading
+└── docker-compose.yml       # Docker Compose config
 ```
-
-## Recent Improvements
-
-- **Development Environment**: Added docker-compose.override.yml and Dockerfile.dev for hot reloading in development
-- **Navigation Fixes**: Fixed navigation links in the Hire Me section and Lab Help section to point to valid pages
-- **Advertisement Spaces**: Ensured all pages have dedicated spaces for advertisements
-- **Documentation**: Updated README with comprehensive information about the project
 
 ## Future Enhancements
 
@@ -196,8 +172,10 @@ MyPortfolio/
 - Enhanced admin dashboard with analytics
 - More interactive features in the Automation Lab
 - Security testing playground in the Automation Lab
-- Search functionality for the blog
 - Comments or reactions on blog posts
+- User profile customization
+- Social media sharing for blog posts
+- Email subscription for blog updates
 
 ## License
 

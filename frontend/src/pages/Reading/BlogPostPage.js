@@ -16,7 +16,7 @@ const BlogPostPage = () => {
         // In a real app, this would be an API call
         // const response = await axios.get(`/api/posts/${postId}`);
         // setPost(response.data);
-        
+
         // For now, use mock data
         // Simulate API delay
         setTimeout(() => {
@@ -76,17 +76,17 @@ public class FirstTest {
     public static void main(String[] args) {
         // Set the path to the ChromeDriver
         System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
-        
+
         // Initialize ChromeDriver
         WebDriver driver = new ChromeDriver();
-        
+
         // Navigate to a website
         driver.get("https://www.example.com");
-        
+
         // Find an element by its ID and interact with it
         WebElement element = driver.findElement(By.id("example-id"));
         element.click();
-        
+
         // Close the browser
         driver.quit();
     }
@@ -149,7 +149,7 @@ Happy testing!
             topicId: parseInt(topicId),
             readTime: '8 min read',
           };
-          
+
           setPost(mockPost);
           setLoading(false);
         }, 800); // Simulate loading delay
@@ -172,16 +172,16 @@ Happy testing!
       );
     },
   };
-  
+
   marked.use({ renderer });
 
   // Function to safely render HTML content (including iframes for videos)
   const createMarkup = (content) => {
     if (!content) return { __html: '' };
-    
+
     // First pass: Convert markdown to HTML
     let html = marked(content);
-    
+
     return { __html: html };
   };
 
@@ -240,8 +240,8 @@ Happy testing!
       </section>
 
       {/* Advertisement Space */}
-      <div className="ad-banner">
-        Advertisement Space
+      <div className="ad-banner" aria-label="Advertisement Space">
+        <span className="sr-only">Advertisement Space</span>
       </div>
 
       {/* Post Content */}
@@ -262,13 +262,9 @@ Happy testing!
                 <div className="flex items-center mb-4">
                   <div className="w-16 h-16 rounded-full overflow-hidden mr-4">
                     <img 
-                      src="/author-profile.jpg" 
+                      src="https://randomuser.me/api/portraits/men/75.jpg" 
                       alt={post.author} 
                       className="w-full h-full object-cover"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = 'https://via.placeholder.com/150';
-                      }}
                     />
                   </div>
                   <div>
@@ -282,8 +278,8 @@ Happy testing!
               </div>
 
               {/* Advertisement Space - Sidebar */}
-              <div className="ad-sidebar">
-                Advertisement Space
+              <div className="ad-sidebar" aria-label="Advertisement Space">
+                <span className="sr-only">Advertisement Space</span>
               </div>
             </div>
           </div>
@@ -291,8 +287,8 @@ Happy testing!
       </section>
 
       {/* Advertisement Space */}
-      <div className="ad-banner">
-        Advertisement Space
+      <div className="ad-banner" aria-label="Advertisement Space">
+        <span className="sr-only">Advertisement Space</span>
       </div>
 
       {/* Related Posts - Could be implemented in a real app */}

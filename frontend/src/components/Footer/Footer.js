@@ -7,10 +7,10 @@ const Footer = () => {
   return (
     <footer className="bg-gray-800 text-white">
       {/* Advertisement Space */}
-      <div className="ad-banner">
-        Advertisement Space
+      <div className="ad-banner" aria-label="Advertisement Space">
+        <span className="sr-only">Advertisement Space</span>
       </div>
-      
+
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* About */}
@@ -22,7 +22,7 @@ const Footer = () => {
               Automation Lab for testing practice.
             </p>
           </div>
-          
+
           {/* Quick Links */}
           <div>
             <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
@@ -49,7 +49,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          
+
           {/* Contact */}
           <div>
             <h3 className="text-xl font-semibold mb-4">Contact</h3>
@@ -81,7 +81,7 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-        
+
         {/* Copyright */}
         <div className="mt-8 pt-8 border-t border-gray-700 text-center text-gray-400">
           <p>&copy; {currentYear} My Portfolio. All rights reserved.</p>

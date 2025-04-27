@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   frontend:
     build:
@@ -8,8 +6,21 @@ services:
       - "80:80"
     depends_on:
       - backend
+    volumes:
+      - nginx_conf:/etc/nginx/conf.d
+      - nginx_logs:/var/log/nginx
     networks:
       - portfolio-network
+    restart: unless-stopped
+    command: ["nginx", "-g", "daemon off;"]
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - certbot_certs:/etc/letsencrypt
+      - certbot_www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    restart: unless-stopped
 
   backend:
     build:
@@ -19,23 +30,55 @@ services:
     depends_on:
       - db
     environment:
-      - DATABASE_URL=postgresql://postgres:postgres@db:5432/portfolio
-      - SECRET_KEY=your-secret-key-change-in-production
+      - DATABASE_URL=postgresql://app_user:${DB_APP_PASSWORD:-secure_password}@db:5432/portfolio
+      - SECRET_KEY=${JWT_SECRET_KEY:-$(openssl rand -hex 32)}
+      - ACCESS_TOKEN_EXPIRE_MINUTES=15
+      - REFRESH_TOKEN_EXPIRE_DAYS=7
+      - CORS_ORIGINS=http://localhost
+      - LOG_LEVEL=INFO
+    volumes:
+      - backend_logs:/app/logs
+      - ./backend:/app
     networks:
       - portfolio-network
+    restart: unless-stopped
 
   db:
     image: postgres:13
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+      - ./db/init:/docker-entrypoint-initdb.d
+      - db_backups:/backups
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=${DB_ADMIN_USER:-postgres}
+      - POSTGRES_PASSWORD=${DB_ADMIN_PASSWORD:-postgres}
       - POSTGRES_DB=portfolio
+      - APP_DB_USER=${DB_APP_USER:-app_user}
+      - APP_DB_PASS=${DB_APP_PASSWORD:-secure_password}
     ports:
       - "5432:5432"
     networks:
       - portfolio-network
+    restart: unless-stopped
+
+  # Vulnerability scanning service
+  security-scanner:
+    image: aquasec/trivy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./security-reports:/reports
+    command: >
+      /bin/sh -c "
+        mkdir -p /reports &&
+        trivy image --format json --output /reports/frontend-vulnerabilities.json frontend:latest &&
+        trivy image --format json --output /reports/backend-vulnerabilities.json backend:latest &&
+        trivy image --format json --output /reports/db-vulnerabilities.json postgres:13 &&
+        echo 'Vulnerability scan complete. Reports saved to /reports directory.' &&
+        sleep infinity"
+    depends_on:
+      - frontend
+      - backend
+      - db
 
 networks:
   portfolio-network:
@@ -43,3 +86,9 @@ networks:
 
 volumes:
   postgres_data:
+  certbot_certs:
+  certbot_www:
+  nginx_conf:
+  nginx_logs:
+  backend_logs:
+  db_backups:

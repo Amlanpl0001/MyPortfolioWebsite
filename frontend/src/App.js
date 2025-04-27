@@ -19,36 +19,48 @@ import ApiPlayground from './pages/AutomationLab/ApiPlayground';
 import DbPlayground from './pages/AutomationLab/DbPlayground';
 import ProjectPlayground from './pages/AutomationLab/ProjectPlayground';
 
-// Import context
+// Import contexts
 import { AuthProvider } from './contexts/AuthContext';
+import { ThemeProvider, useTheme } from './contexts/ThemeContext';
+
+// Main App Content with theme awareness
+const AppContent = () => {
+  const { theme } = useTheme();
+
+  return (
+    <div className={`App ${theme === 'dark' ? 'bg-dark-background' : 'bg-light-background'}`}>
+      <Header />
+      <main className={`main-content min-h-screen ${theme === 'dark' ? 'text-dark-textPrimary' : 'text-light-textPrimary'}`}>
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<HomePage />} />
+          <Route path="/portfolio" element={<PortfolioPage />} />
+          <Route path="/reading" element={<ReadingPage />} />
+          <Route path="/reading/:topicId/:postId" element={<BlogPostPage />} />
+          <Route path="/login" element={<LoginPage />} />
+
+          {/* Protected Routes */}
+          <Route path="/admin/*" element={<AdminDashboard />} />
+          <Route path="/lab" element={<LabHomePage />} />
+          <Route path="/lab/web" element={<WebPlayground />} />
+          <Route path="/lab/api" element={<ApiPlayground />} />
+          <Route path="/lab/db" element={<DbPlayground />} />
+          <Route path="/lab/project" element={<ProjectPlayground />} />
+        </Routes>
+      </main>
+      <Footer />
+    </div>
+  );
+};
 
 function App() {
   return (
     <AuthProvider>
-      <Router>
-        <div className="App">
-          <Header />
-          <main className="main-content">
-            <Routes>
-              {/* Public Routes */}
-              <Route path="/" element={<HomePage />} />
-              <Route path="/portfolio" element={<PortfolioPage />} />
-              <Route path="/reading" element={<ReadingPage />} />
-              <Route path="/reading/:topicId/:postId" element={<BlogPostPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              
-              {/* Protected Routes */}
-              <Route path="/admin/*" element={<AdminDashboard />} />
-              <Route path="/lab" element={<LabHomePage />} />
-              <Route path="/lab/web" element={<WebPlayground />} />
-              <Route path="/lab/api" element={<ApiPlayground />} />
-              <Route path="/lab/db" element={<DbPlayground />} />
-              <Route path="/lab/project" element={<ProjectPlayground />} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
-      </Router>
+      <ThemeProvider>
+        <Router>
+          <AppContent />
+        </Router>
+      </ThemeProvider>
     </AuthProvider>
   );
 }

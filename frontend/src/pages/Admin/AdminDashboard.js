@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import TipTapEditor from '../../components/TipTapEditor/TipTapEditor';
 
 // Admin Dashboard Components
 const AdminDashboard = () => {
   const { isAdmin, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   // Check if user is authenticated and is an admin
   useEffect(() => {
     if (!isAuthenticated()) {
@@ -24,6 +25,7 @@ const AdminDashboard = () => {
     const path = location.pathname;
     if (path.includes('/admin/users')) return 'users';
     if (path.includes('/admin/posts')) return 'posts';
+    if (path.includes('/admin/topics')) return 'topics';
     return 'dashboard';
   };
 
@@ -39,8 +41,8 @@ const AdminDashboard = () => {
       </section>
 
       {/* Advertisement Space */}
-      <div className="ad-banner">
-        Advertisement Space
+      <div className="ad-banner" aria-label="Advertisement Space">
+        <span className="sr-only">Advertisement Space</span>
       </div>
 
       <section className="py-8 bg-gray-100">
@@ -77,6 +79,16 @@ const AdminDashboard = () => {
             >
               Practice Users
             </Link>
+            <Link 
+              to="/admin/topics" 
+              className={`px-6 py-3 font-medium ${
+                getCurrentTab() === 'topics' 
+                  ? 'text-blue-600 border-b-2 border-blue-600' 
+                  : 'text-gray-600 hover:text-blue-600'
+              }`}
+            >
+              Topics
+            </Link>
           </div>
 
           {/* Admin Content */}
@@ -85,14 +97,15 @@ const AdminDashboard = () => {
               <Route path="/" element={<DashboardHome />} />
               <Route path="/posts" element={<ManagePosts />} />
               <Route path="/users" element={<ManageUsers />} />
+              <Route path="/topics" element={<ManageTopics />} />
             </Routes>
           </div>
         </div>
       </section>
 
       {/* Advertisement Space */}
-      <div className="ad-banner">
-        Advertisement Space
+      <div className="ad-banner" aria-label="Advertisement Space">
+        <span className="sr-only">Advertisement Space</span>
       </div>
     </div>
   );
@@ -113,7 +126,7 @@ const DashboardHome = () => {
             Manage Posts
           </Link>
         </div>
-        
+
         <div className="glass p-6 rounded-lg">
           <h3 className="text-xl font-semibold mb-2">Practice Users</h3>
           <p className="text-gray-600 mb-4">Manage users who can access the Automation Lab.</p>
@@ -124,7 +137,7 @@ const DashboardHome = () => {
             Manage Users
           </Link>
         </div>
-        
+
         <div className="glass p-6 rounded-lg">
           <h3 className="text-xl font-semibold mb-2">Site Statistics</h3>
           <p className="text-gray-600 mb-4">View site statistics and analytics.</p>
@@ -164,7 +177,7 @@ const ManagePosts = () => {
         // In a real app, this would be an API call
         // const response = await axios.get('/api/admin/posts');
         // setPosts(response.data);
-        
+
         // For now, use mock data
         setTimeout(() => {
           setPosts([
@@ -224,38 +237,74 @@ const ManagePosts = () => {
     });
   };
 
+  // Handle editor content change
+  const handleEditorChange = (content) => {
+    setFormData({
+      ...formData,
+      content: content,
+    });
+  };
+
+  // Helper function to extract plain text from HTML
+  const extractPlainText = (html) => {
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = html;
+    return tempDiv.textContent || tempDiv.innerText || '';
+  };
+
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
       setLoading(true);
-      
+
       // In a real app, this would be an API call
       // const response = await axios.post('/api/admin/posts', formData);
       // or for edit: await axios.put(`/api/admin/posts/${currentPost.id}`, formData);
-      
+
       // For now, simulate API call
       setTimeout(() => {
         if (currentPost) {
+          // Extract plain text for snippet
+          const plainText = extractPlainText(formData.content);
+          const snippet = plainText.length > 100 ? plainText.substring(0, 100) + '...' : plainText;
+
+          // Save the formatted content to localStorage
+          localStorage.setItem(`post_${currentPost.id}_content`, formData.content);
+
           // Edit existing post
           setPosts(posts.map(post => 
             post.id === currentPost.id 
-              ? { ...post, title: formData.title, topicId: parseInt(formData.topicId) }
+              ? { 
+                  ...post, 
+                  title: formData.title, 
+                  snippet: snippet,
+                  topicId: parseInt(formData.topicId) 
+                }
               : post
           ));
         } else {
+          // Extract plain text for snippet
+          const plainText = extractPlainText(formData.content);
+          const snippet = plainText.length > 100 ? plainText.substring(0, 100) + '...' : plainText;
+
           // Add new post
+          const newPostId = posts.length + 1;
           const newPost = {
-            id: posts.length + 1,
+            id: newPostId,
             title: formData.title,
-            snippet: formData.content.substring(0, 100) + '...',
+            snippet: snippet,
             publishDate: new Date().toISOString().split('T')[0],
             topicId: parseInt(formData.topicId),
           };
+
+          // Save the formatted content to localStorage
+          localStorage.setItem(`post_${newPostId}_content`, formData.content);
+
           setPosts([...posts, newPost]);
         }
-        
+
         // Reset form
         setFormData({
           title: '',
@@ -275,9 +324,28 @@ const ManagePosts = () => {
   // Handle edit post
   const handleEdit = (post) => {
     setCurrentPost(post);
+
+    // In a real app, we would fetch the full content with formatting from an API
+    // For now, we'll simulate fetching the saved content from localStorage
+    let savedContent = localStorage.getItem(`post_${post.id}_content`);
+
+    // If there's no saved content in localStorage, create some formatted HTML
+    if (!savedContent) {
+      savedContent = `
+        <h1>${post.title}</h1>
+        <p>${post.snippet.replace('...', '')}</p>
+        <p>This is a <strong>formatted</strong> content that demonstrates the <em>TipTap</em> editor's capabilities.</p>
+        <ul>
+          <li>Feature 1</li>
+          <li>Feature 2</li>
+          <li>Feature 3</li>
+        </ul>
+      `;
+    }
+
     setFormData({
       title: post.title,
-      content: post.snippet.replace('...', ''), // This is just a mock, in a real app we'd fetch the full content
+      content: savedContent, // Use the saved formatted HTML content
       topicId: post.topicId.toString(),
     });
     setShowForm(true);
@@ -288,13 +356,13 @@ const ManagePosts = () => {
     if (!window.confirm('Are you sure you want to delete this post?')) {
       return;
     }
-    
+
     try {
       setLoading(true);
-      
+
       // In a real app, this would be an API call
       // await axios.delete(`/api/admin/posts/${postId}`);
-      
+
       // For now, simulate API call
       setTimeout(() => {
         setPosts(posts.filter(post => post.id !== postId));
@@ -355,7 +423,7 @@ const ManagePosts = () => {
                 required
               />
             </div>
-            
+
             <div>
               <label htmlFor="topicId" className="block text-gray-700 mb-2">Topic</label>
               <select
@@ -374,24 +442,19 @@ const ManagePosts = () => {
                 <option value="5">Career Growth</option>
               </select>
             </div>
-            
+
             <div>
               <label htmlFor="content" className="block text-gray-700 mb-2">Content</label>
-              <textarea
-                id="content"
-                name="content"
-                value={formData.content}
-                onChange={handleInputChange}
-                rows="10"
-                className="neumorphic-inset w-full px-4 py-2 rounded-lg"
-                required
-                placeholder="Write your post content in Markdown format..."
-              ></textarea>
+              <TipTapEditor
+                content={formData.content}
+                onChange={handleEditorChange}
+                placeholder="Write your post content here..."
+              />
               <p className="text-sm text-gray-600 mt-1">
-                Markdown formatting is supported. You can use # for headings, ** for bold, etc.
+                Use the toolbar above to format your content.
               </p>
             </div>
-            
+
             <div className="flex justify-end">
               <button
                 type="submit"
@@ -466,7 +529,7 @@ const ManageUsers = () => {
         // In a real app, this would be an API call
         // const response = await axios.get('/api/admin/users');
         // setUsers(response.data);
-        
+
         // For now, use mock data
         setTimeout(() => {
           setUsers([
@@ -508,13 +571,13 @@ const ManageUsers = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
       setLoading(true);
-      
+
       // In a real app, this would be an API call
       // const response = await axios.post('/api/admin/users', formData);
-      
+
       // For now, simulate API call
       setTimeout(() => {
         const newUser = {
@@ -525,7 +588,7 @@ const ManageUsers = () => {
           createdAt: new Date().toISOString().split('T')[0],
         };
         setUsers([...users, newUser]);
-        
+
         // Reset form
         setFormData({
           name: '',
@@ -546,13 +609,13 @@ const ManageUsers = () => {
     if (!window.confirm('Are you sure you want to delete this user?')) {
       return;
     }
-    
+
     try {
       setLoading(true);
-      
+
       // In a real app, this would be an API call
       // await axios.delete(`/api/admin/users/${userId}`);
-      
+
       // For now, simulate API call
       setTimeout(() => {
         setUsers(users.filter(user => user.id !== userId));
@@ -603,7 +666,7 @@ const ManageUsers = () => {
                 required
               />
             </div>
-            
+
             <div>
               <label htmlFor="email" className="block text-gray-700 mb-2">Email</label>
               <input
@@ -616,7 +679,7 @@ const ManageUsers = () => {
                 required
               />
             </div>
-            
+
             <div>
               <label htmlFor="password" className="block text-gray-700 mb-2">Password</label>
               <input
@@ -629,7 +692,7 @@ const ManageUsers = () => {
                 required
               />
             </div>
-            
+
             <div className="flex justify-end">
               <button
                 type="submit"
@@ -666,6 +729,245 @@ const ManageUsers = () => {
                   <div>
                     <button
                       onClick={() => handleDelete(user.id)}
+                      className="px-3 py-1 bg-red-100 text-red-700 rounded hover:bg-red-200 transition-colors"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
+
+// Manage Topics Component
+const ManageTopics = () => {
+  const [topics, setTopics] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    description: '',
+  });
+  const [currentTopic, setCurrentTopic] = useState(null);
+
+  // Fetch topics on component mount
+  useEffect(() => {
+    const fetchTopics = async () => {
+      try {
+        // In a real app, this would be an API call
+        // const response = await axios.get('/api/admin/topics');
+        // setTopics(response.data);
+
+        // For now, use mock data
+        setTimeout(() => {
+          setTopics([
+            { id: 1, name: 'Manual Testing', description: 'Articles about manual testing techniques and best practices.' },
+            { id: 2, name: 'Selenium', description: 'Tutorials and tips for Selenium automation.' },
+            { id: 3, name: 'Python', description: 'Python programming for testers and developers.' },
+            { id: 4, name: 'Travel', description: 'Travel experiences and recommendations.' },
+            { id: 5, name: 'Career Growth', description: 'Tips for growing your career in tech.' },
+          ]);
+          setLoading(false);
+        }, 800);
+      } catch (err) {
+        setError('Failed to fetch topics. Please try again later.');
+        setLoading(false);
+      }
+    };
+
+    fetchTopics();
+  }, []);
+
+  // Handle form input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      setLoading(true);
+
+      // In a real app, this would be an API call
+      // const response = await axios.post('/api/admin/topics', formData);
+      // or for edit: await axios.put(`/api/admin/topics/${currentTopic.id}`, formData);
+
+      // For now, simulate API call
+      setTimeout(() => {
+        if (currentTopic) {
+          // Edit existing topic
+          setTopics(topics.map(topic => 
+            topic.id === currentTopic.id 
+              ? { 
+                  ...topic, 
+                  name: formData.name, 
+                  description: formData.description
+                }
+              : topic
+          ));
+        } else {
+          // Add new topic
+          const newTopic = {
+            id: topics.length + 1,
+            name: formData.name,
+            description: formData.description,
+          };
+          setTopics([...topics, newTopic]);
+        }
+
+        // Reset form
+        setFormData({
+          name: '',
+          description: '',
+        });
+        setCurrentTopic(null);
+        setShowForm(false);
+        setLoading(false);
+      }, 800);
+    } catch (err) {
+      setError('Failed to save topic. Please try again later.');
+      setLoading(false);
+    }
+  };
+
+  // Handle edit topic
+  const handleEdit = (topic) => {
+    setCurrentTopic(topic);
+    setFormData({
+      name: topic.name,
+      description: topic.description,
+    });
+    setShowForm(true);
+  };
+
+  // Handle delete topic
+  const handleDelete = async (topicId) => {
+    if (!window.confirm('Are you sure you want to delete this topic?')) {
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      // In a real app, this would be an API call
+      // await axios.delete(`/api/admin/topics/${topicId}`);
+
+      // For now, simulate API call
+      setTimeout(() => {
+        setTopics(topics.filter(topic => topic.id !== topicId));
+        setLoading(false);
+      }, 800);
+    } catch (err) {
+      setError('Failed to delete topic. Please try again later.');
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="manage-topics">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-bold">Manage Topics</h2>
+        <button
+          onClick={() => {
+            setCurrentTopic(null);
+            setFormData({
+              name: '',
+              description: '',
+            });
+            setShowForm(!showForm);
+          }}
+          className="neumorphic px-4 py-2 rounded-lg text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+        >
+          {showForm ? 'Cancel' : 'Add New Topic'}
+        </button>
+      </div>
+
+      {error && (
+        <div className="bg-red-100 text-red-700 p-4 rounded-lg mb-6">
+          {error}
+        </div>
+      )}
+
+      {showForm && (
+        <div className="glass p-6 rounded-lg mb-8">
+          <h3 className="text-xl font-semibold mb-4">
+            {currentTopic ? 'Edit Topic' : 'Create New Topic'}
+          </h3>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label htmlFor="name" className="block text-gray-700 mb-2">Name</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                className="neumorphic-inset w-full px-4 py-2 rounded-lg"
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="description" className="block text-gray-700 mb-2">Description</label>
+              <textarea
+                id="description"
+                name="description"
+                value={formData.description}
+                onChange={handleInputChange}
+                className="neumorphic-inset w-full px-4 py-2 rounded-lg"
+                rows="3"
+                required
+              />
+            </div>
+
+            <div className="flex justify-end">
+              <button
+                type="submit"
+                className="neumorphic px-6 py-2 rounded-lg text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+                disabled={loading}
+              >
+                {loading ? 'Saving...' : 'Save Topic'}
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {loading && !showForm ? (
+        <p>Loading topics...</p>
+      ) : (
+        <div className="space-y-6">
+          {topics.length === 0 ? (
+            <p>No topics found. Create your first topic!</p>
+          ) : (
+            topics.map((topic) => (
+              <div key={topic.id} className="neumorphic p-6 rounded-lg">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h3 className="text-xl font-semibold mb-2">{topic.name}</h3>
+                    <p className="text-gray-700 mb-2">{topic.description}</p>
+                  </div>
+                  <div className="flex space-x-2">
+                    <button
+                      onClick={() => handleEdit(topic)}
+                      className="px-3 py-1 bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-colors"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(topic.id)}
                       className="px-3 py-1 bg-red-100 text-red-700 rounded hover:bg-red-200 transition-colors"
                     >
                       Delete

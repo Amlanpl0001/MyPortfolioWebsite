@@ -5,7 +5,46 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7ecb29aa-3e1c-4274-8250-08db597a1850" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/INSTALL.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SUMMARY.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/backend/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/test_main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.override.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/Dockerfile.dev" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/nginx.conf" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/nginx.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/public/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/public/manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/public/robots.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Footer/Footer.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Footer/Footer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Header/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Header/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/contexts/AuthContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/contexts/AuthContext.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/contexts/AuthContext.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Admin/AdminDashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Admin/AdminDashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Auth/LoginPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Auth/LoginPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/AutomationLab/ApiPlayground.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/AutomationLab/ApiPlayground.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/AutomationLab/DbPlayground.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/AutomationLab/DbPlayground.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/AutomationLab/LabHomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/AutomationLab/LabHomePage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/AutomationLab/ProjectPlayground.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/AutomationLab/ProjectPlayground.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/AutomationLab/WebPlayground.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/AutomationLab/WebPlayground.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Home/HomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Home/HomePage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Home/HomePage.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Portfolio/PortfolioPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Portfolio/PortfolioPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Portfolio/PortfolioPage.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Reading/BlogPostPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Reading/BlogPostPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Reading/ReadingPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Reading/ReadingPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Reading/ReadingPage.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/tailwind.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test-report.md" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +95,7 @@
       <updated>1745726043511</updated>
       <workItem from="1745726044636" duration="2637000" />
       <workItem from="1745731758852" duration="821000" />
-      <workItem from="1745733456521" duration="3039000" />
+      <workItem from="1745733456521" duration="28327000" />
     </task>
     <servers />
   </component>

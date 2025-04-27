@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
     // Check if token exists in localStorage
     const storedToken = localStorage.getItem('token');
     const storedRole = localStorage.getItem('userRole');
-    
+
     if (storedToken) {
       // Validate token with backend or decode JWT to get user info
       // For now, we'll just set the user based on the stored role
@@ -22,37 +22,39 @@ export const AuthProvider = ({ children }) => {
       setToken(storedToken);
       setUserRole(storedRole);
     }
-    
+
     setLoading(false);
   }, []);
 
   // Login function
   const login = async (email, password) => {
     try {
-      // Call backend API to authenticate
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      // For demo purposes, we'll use mock authentication
+      // In a real app, this would call the backend API
 
-      if (!response.ok) {
-        throw new Error('Login failed');
+      let data;
+
+      // Check credentials
+      if (email === 'admin@example.com' && password === 'admin123') {
+        // Admin login
+        data = { token: 'mock-admin-token', role: 'admin' };
+      } else if (email === 'practice@example.com' && password === 'practice123') {
+        // Practice user login
+        data = { token: 'mock-practice-token', role: 'practice' };
+      } else {
+        // In a real app, this would be handled by the backend
+        throw new Error('Invalid email or password');
       }
 
-      const data = await response.json();
-      
       // Store token and user role in localStorage
       localStorage.setItem('token', data.token);
       localStorage.setItem('userRole', data.role);
-      
+
       // Update state
       setToken(data.token);
       setUserRole(data.role);
       setCurrentUser({ role: data.role });
-      
+
       return { success: true, role: data.role };
     } catch (error) {
       console.error('Login error:', error);

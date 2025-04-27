@@ -43,13 +43,9 @@ const PortfolioPage = () => {
               <div className="md:w-1/3 mb-6 md:mb-0">
                 <div className="w-48 h-48 rounded-full overflow-hidden mx-auto">
                   <img 
-                    src="/placeholder-profile.jpg" 
+                    src="https://randomuser.me/api/portraits/men/75.jpg" 
                     alt="Profile" 
                     className="w-full h-full object-cover"
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = 'https://via.placeholder.com/150';
-                    }}
                   />
                 </div>
               </div>
@@ -63,8 +59,8 @@ const PortfolioPage = () => {
                 </p>
                 <div className="flex space-x-4">
                   <a 
-                    href="/resume.pdf" 
-                    className="neumorphic px-4 py-2 rounded-lg text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+                    href="/sample-resume.pdf" 
+                    className="neumorphic px-4 py-2 rounded-lg text-black bg-blue-600 hover:bg-blue-700 transition-colors"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -86,8 +82,8 @@ const PortfolioPage = () => {
       </section>
 
       {/* Advertisement Space */}
-      <div className="ad-banner">
-        Advertisement Space
+      <div className="ad-banner" aria-label="Advertisement Space">
+        <span className="sr-only">Advertisement Space</span>
       </div>
 
       {/* Skills Section */}
@@ -210,8 +206,8 @@ const PortfolioPage = () => {
       </section>
 
       {/* Advertisement Space */}
-      <div className="ad-banner">
-        Advertisement Space
+      <div className="ad-banner" aria-label="Advertisement Space">
+        <span className="sr-only">Advertisement Space</span>
       </div>
 
       {/* Projects Section */}
@@ -224,13 +220,9 @@ const PortfolioPage = () => {
             <div className="glass p-6 rounded-lg">
               <div className="h-48 bg-gray-200 rounded-lg mb-4 overflow-hidden">
                 <img 
-                  src="/project1.jpg" 
+                  src="https://source.unsplash.com/random/300x200?automation" 
                   alt="Project 1" 
                   className="w-full h-full object-cover"
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = 'https://via.placeholder.com/300x200?text=Project+Image';
-                  }}
                 />
               </div>
               <h3 className="text-xl font-semibold mb-2">Automation Framework</h3>
@@ -265,13 +257,9 @@ const PortfolioPage = () => {
             <div className="glass p-6 rounded-lg">
               <div className="h-48 bg-gray-200 rounded-lg mb-4 overflow-hidden">
                 <img 
-                  src="/project2.jpg" 
+                  src="https://source.unsplash.com/random/300x200?ecommerce" 
                   alt="Project 2" 
                   className="w-full h-full object-cover"
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = 'https://via.placeholder.com/300x200?text=Project+Image';
-                  }}
                 />
               </div>
               <h3 className="text-xl font-semibold mb-2">E-commerce Platform</h3>
@@ -306,13 +294,9 @@ const PortfolioPage = () => {
             <div className="glass p-6 rounded-lg">
               <div className="h-48 bg-gray-200 rounded-lg mb-4 overflow-hidden">
                 <img 
-                  src="/project3.jpg" 
+                  src="https://source.unsplash.com/random/300x200?api" 
                   alt="Project 3" 
                   className="w-full h-full object-cover"
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = 'https://via.placeholder.com/300x200?text=Project+Image';
-                  }}
                 />
               </div>
               <h3 className="text-xl font-semibold mb-2">API Testing Tool</h3>
@@ -384,8 +368,8 @@ const PortfolioPage = () => {
       </section>
 
       {/* Advertisement Space */}
-      <div className="ad-banner">
-        Advertisement Space
+      <div className="ad-banner" aria-label="Advertisement Space">
+        <span className="sr-only">Advertisement Space</span>
       </div>
 
       {/* Interests & Personal Endeavors Section */}
@@ -407,71 +391,95 @@ const PortfolioPage = () => {
       </section>
 
       {/* Hire Me / Contact Section */}
-      <section id="hire-me" className="py-16 bg-gray-100">
+      <section className="py-16 bg-gray-100">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Hire Me</h2>
 
-          <div className="max-w-3xl mx-auto glass p-8 rounded-lg">
-            <p className="text-xl text-center mb-8">
-              Interested in working together? I'm currently available for freelance projects
-              and full-time opportunities. Let's connect!
-            </p>
+          <div className="max-w-5xl mx-auto glass p-8 rounded-lg">
+            <div className="flex flex-col md:flex-row">
+              {/* Left Side - Contact Information */}
+              <div className="md:w-1/2 md:pr-8 mb-8 md:mb-0">
+                <h3 className="text-2xl font-semibold mb-6">Contact Information</h3>
 
-            {formSubmitted ? (
-              <div className="bg-green-100 text-green-700 p-4 rounded-lg mb-6">
-                Thank you for reaching out! I'll get back to you as soon as possible.
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="text-lg font-medium mb-2">Email</h4>
+                    <p className="text-gray-700">john.doe@example.com</p>
+                  </div>
+
+                  <div>
+                    <h4 className="text-lg font-medium mb-2">Phone</h4>
+                    <p className="text-gray-700">Primary: (555) 123-4567</p>
+                    <p className="text-gray-700">Secondary: (555) 987-6543</p>
+                  </div>
+
+                  <div>
+                    <h4 className="text-lg font-medium mb-2">LinkedIn</h4>
+                    <p className="text-gray-700">
+                      <a 
+                        href="https://linkedin.com/in/johndoe" 
+                        className="text-blue-600 hover:text-blue-800 transition-colors"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        linkedin.com/in/johndoe
+                      </a>
+                    </p>
+                  </div>
+
+                  <div>
+                    <h4 className="text-lg font-medium mb-2">Availability</h4>
+                    <p className="text-gray-700">Available for full-time positions and select contract opportunities</p>
+                  </div>
+
+                  <div className="pt-4">
+                    <a 
+                      href="/sample-resume.pdf" 
+                      className="neumorphic px-6 py-3 rounded-lg text-black bg-blue-600 hover:bg-blue-700 transition-colors inline-block"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Download My Résumé
+                    </a>
+                  </div>
+                </div>
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label htmlFor="name" className="block text-gray-700 mb-2">Name</label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    className="neumorphic-inset w-full px-4 py-2 rounded-lg"
-                    required
-                  />
-                </div>
 
-                <div>
-                  <label htmlFor="email" className="block text-gray-700 mb-2">Email</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className="neumorphic-inset w-full px-4 py-2 rounded-lg"
-                    required
-                  />
-                </div>
+              {/* Right Side - Capabilities */}
+              <div className="md:w-1/2 md:pl-8 md:border-l border-gray-300">
+                <h3 className="text-2xl font-semibold mb-6">My Capabilities</h3>
 
-                <div>
-                  <label htmlFor="message" className="block text-gray-700 mb-2">Message</label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    rows="5"
-                    className="neumorphic-inset w-full px-4 py-2 rounded-lg"
-                    required
-                  ></textarea>
-                </div>
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="text-lg font-medium mb-2">End-to-End Test Automation</h4>
+                    <p className="text-gray-700">
+                      Expertise in designing and implementing comprehensive test automation frameworks that cover UI, API, and database testing.
+                    </p>
+                  </div>
 
-                <div className="text-center">
-                  <button
-                    type="submit"
-                    className="neumorphic px-8 py-3 rounded-lg text-white bg-blue-600 hover:bg-blue-700 transition-colors"
-                  >
-                    Send Message
-                  </button>
+                  <div>
+                    <h4 className="text-lg font-medium mb-2">CI/CD Integration</h4>
+                    <p className="text-gray-700">
+                      Strong experience integrating automated tests into CI/CD pipelines for continuous quality assurance and faster releases.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h4 className="text-lg font-medium mb-2">Full-Stack Development</h4>
+                    <p className="text-gray-700">
+                      Capable of developing both frontend and backend components, with a focus on creating testable and maintainable code.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h4 className="text-lg font-medium mb-2">Team Leadership</h4>
+                    <p className="text-gray-700">
+                      Experience leading QA teams, mentoring junior engineers, and collaborating effectively with cross-functional teams.
+                    </p>
+                  </div>
                 </div>
-              </form>
-            )}
+              </div>
+            </div>
           </div>
         </div>
       </section>

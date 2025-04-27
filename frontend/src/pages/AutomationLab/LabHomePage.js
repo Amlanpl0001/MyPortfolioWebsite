@@ -28,8 +28,8 @@ const LabHomePage = () => {
       </section>
 
       {/* Advertisement Space */}
-      <div className="ad-banner">
-        Advertisement Space
+      <div className="ad-banner" aria-label="Advertisement Space">
+        <span className="sr-only">Advertisement Space</span>
       </div>
 
       <section className="py-12 bg-gray-100">
@@ -145,8 +145,8 @@ const LabHomePage = () => {
       </section>
 
       {/* Advertisement Space */}
-      <div className="ad-banner">
-        Advertisement Space
+      <div className="ad-banner" aria-label="Advertisement Space">
+        <span className="sr-only">Advertisement Space</span>
       </div>
 
       <section className="py-12 bg-white">
@@ -166,8 +166,8 @@ const LabHomePage = () => {
               View Documentation
             </a>
             <Link 
-              to="/portfolio#hire-me" 
-              className="neumorphic px-6 py-3 rounded-lg text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+              to="/contact" 
+              className="neumorphic px-6 py-3 rounded-lg text-black bg-blue-600 hover:bg-blue-700 transition-colors"
             >
               Contact Admin
             </Link>
