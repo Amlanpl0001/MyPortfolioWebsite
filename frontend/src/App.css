@@ -1,0 +1,72 @@
+/* App.css */
+
+.App {
+  text-align: center;
+}
+
+/* Glassmorphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+/* Neumorphism effect */
+.neumorphic {
+  background: #f0f0f0;
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px #d1d1d1, -5px -5px 10px #ffffff;
+}
+
+.neumorphic-inset {
+  background: #f0f0f0;
+  border-radius: 10px;
+  box-shadow: inset 5px 5px 10px #d1d1d1, inset -5px -5px 10px #ffffff;
+}
+
+/* Button styles */
+.btn-primary {
+  @apply px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors;
+}
+
+.btn-secondary {
+  @apply px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors;
+}
+
+/* Card styles */
+.card {
+  @apply p-6 rounded-lg shadow-md bg-white;
+}
+
+/* Responsive container */
+.container {
+  @apply mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
+}
+
+/* Section spacing */
+.section {
+  @apply py-12 md:py-16;
+}
+
+/* Advertisement spaces */
+.ad-banner {
+  @apply w-full p-4 bg-gray-100 rounded-md text-center my-4;
+}
+
+.ad-sidebar {
+  @apply w-full p-4 bg-gray-100 rounded-md text-center;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .glass, .neumorphic, .neumorphic-inset {
+    border-radius: 8px;
+  }
+  
+  .section {
+    @apply py-8;
+  }
+}
